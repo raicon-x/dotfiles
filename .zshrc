@@ -8,7 +8,7 @@ export PATH
 # brew install font-jetbrains-mono-nerd-font
 
 # --------- Starship -----------
-# starship
+# brew install starship
 export STARSHIP_CONFIG=~/.config/starship/starship.toml
 eval "$(starship init zsh)"
 
@@ -17,7 +17,7 @@ eval "$(starship init zsh)"
 # source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # --------- zsh-syntax-highting ----------- 
-# brew install zsh-syntax-hightlighting
+# brew install zsh-syntax-highlighting
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # --------- zsh-auto-complete ----------- 
