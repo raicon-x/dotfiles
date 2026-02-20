@@ -73,11 +73,47 @@ export PATH=~/.local/bin/:$PATH
 # STM32 Programmer
 export STM32_PRG_PATH=/Applications/STMicroelectronics/STM32Cube/STM32CubeProgrammer/STM32CubeProgrammer.app/Contents/MacOs/bin%
 
-# Auto-set proxy if not already defined
-if [[ -z "$http_proxy" && -z "$https_proxy" && -z "$all_proxy" ]]; then
-  export https_proxy="http://127.0.0.1:26812"
-  export http_proxy="http://127.0.0.1:26812"
-  export all_proxy="socks5://127.0.0.1:26812"
-  echo "Proxy auto-configured to 127.0.0.1:26812"
-fi
+# ===== Smart Proxy Bootstrap with Daemon Detection =====
+PROXY_HOST="127.0.0.1"
+PROXY_PORT="26812"
+PROXY_HTTP="http://${PROXY_HOST}:${PROXY_PORT}"
+PROXY_SOCKS="socks5://${PROXY_HOST}:${PROXY_PORT}"
+TEST_URL="https://www.youtube.com"
+TIMEOUT=3
 
+proxy_daemon_running() {
+  pgrep -f "clash|mihomo|v2ray|xray" > /dev/null
+}
+
+proxy_health_check() {
+  curl --proxy "$PROXY_HTTP" \
+       --max-time $TIMEOUT \
+       --silent \
+       --output /dev/null \
+       "$TEST_URL"
+}
+
+set_proxy() {
+  export http_proxy="$PROXY_HTTP"
+  export https_proxy="$PROXY_HTTP"
+  export all_proxy="$PROXY_SOCKS"
+}
+
+unset_proxy() {
+  unset http_proxy https_proxy all_proxy
+}
+
+if proxy_daemon_running; then
+  if [[ -z "$http_proxy" && -z "$https_proxy" ]]; then
+    set_proxy
+    if proxy_health_check; then
+      echo "✔ Proxy enabled (daemon running)"
+    else
+      unset_proxy
+      echo "✘ Proxy daemon detected but health check failed"
+    fi
+  fi
+else
+  unset_proxy
+  echo "No Clash/V2Ray daemon running — proxy disabled"
+fi
