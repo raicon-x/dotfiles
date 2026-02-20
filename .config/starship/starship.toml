@@ -1,0 +1,104 @@
+# font symbol can be found here
+# https://starship.rs/presets/nerd-font
+
+format = """
+$cmd_duration\
+$time\
+$line_break\
+[░▒▓](bright-black)\
+[  ](bg:bright-black fg:#ffcccc)\
+[](fg:bright-black bg:#282b3e)\
+$username\
+$hostname\
+[](fg:#282b3e)\
+$directory\
+$git_branch\
+$git_state\
+$git_status\
+$python\
+$c\
+$cpp\
+$swift\
+$rust\
+$lua\
+$line_break\
+$character"""
+
+add_newline = false
+
+[directory]
+style = "$style"
+format = '[  $path]($style)[$read_only]($read_only_style) '
+read_only = ' 󰌾'
+
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = " "
+"Pictures" = " "
+"Developer" = "󰲋 "
+
+[character]
+success_symbol = "[](#ffcccc)"
+error_symbol = "[](red)"
+vimcmd_symbol = "[](green)"
+
+[git_branch]
+symbol = ""
+format = "[$symbol $branch]($style)"
+style = "bright-black"
+
+[git_status]
+format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](218) ($ahead_behind$stashed)]($style)"
+style = "cyan"
+
+conflicted = "​"
+untracked = "​"
+modified = "​"
+staged = "​"
+renamed = "​"
+deleted = "​"
+stashed = "≡"
+
+[git_state]
+format = '\([$state( $progress_current/$progress_total)]($style)\) '
+style = "bright-black"
+
+[cmd_duration]
+min_time = 0
+format = "[took $duration]($style) "
+style = "bright-black"
+
+
+# Languages
+[c]
+format = '[](white)[ C](fg:blue bg:white)[](white)'
+
+[cpp]
+format = '[](white)[ CPP](fg:blue bg:white)[](white)'
+
+[python]
+format = '[](#517ead)[ Python](fg:#fae47a bg:#517ead)[](#517ead)'
+
+[swift]
+format = '[](#de5d43)[ Swift](fg:white bg:#de5d43)[](#de5d43)'
+
+[lua]
+format = '[](#00007f)[ Lua](fg:white bg:#00007f)[](#00007f)'
+
+[rust]
+format = '[](white)[ Rust](fg:bright-black bg:white)[](white)'
+
+[username]
+format = '[ $user](fg:black bg:#282b3e)'
+disabled = false
+show_always = true
+
+[hostname]
+format = '@[$user]($style)'
+
+[time]
+disabled = false
+format = '[\[$time\]]($style) '
+time_format = '%F %T%z'
+style = "bright-black"

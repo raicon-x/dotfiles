@@ -1,0 +1,24 @@
+# Color theme
+#theme = tokyonight
+theme = Catppuccin Mocha
+
+# Font
+font-family = JetBrains Mono
+
+# Cursor
+cursor-style = block
+# cursor-color = #ffcccc
+
+# Background
+# background = #1a1b26
+# background = #222436
+background-opacity = 0.8
+background-blur = true
+
+# Keybindings
+keybind = super+u=scroll_page_up
+keybind = super+i=scroll_page_down
+keybind = super+k=scroll_page_lines:1
+keybind = super+j=scroll_page_lines:-1
+keybind = super+f=toggle_fullscreen
+
