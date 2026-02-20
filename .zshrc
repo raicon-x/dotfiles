@@ -72,3 +72,12 @@ export PATH=~/.local/bin/:$PATH
 
 # STM32 Programmer
 export STM32_PRG_PATH=/Applications/STMicroelectronics/STM32Cube/STM32CubeProgrammer/STM32CubeProgrammer.app/Contents/MacOs/bin%
+
+# Auto-set proxy if not already defined
+if [[ -z "$http_proxy" && -z "$https_proxy" && -z "$all_proxy" ]]; then
+  export https_proxy="http://127.0.0.1:26812"
+  export http_proxy="http://127.0.0.1:26812"
+  export all_proxy="socks5://127.0.0.1:26812"
+  echo "Proxy auto-configured to 127.0.0.1:26812"
+fi
+
