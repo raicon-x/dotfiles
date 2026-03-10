@@ -9,8 +9,8 @@ export PATH
 
 # --------- Starship -----------
 # brew install starship
-export STARSHIP_CONFIG=~/.config/starship/starship.toml
-eval "$(starship init zsh)"
+# export STARSHIP_CONFIG=~/.config/starship/starship.toml
+# eval "$(starship init zsh)"
 
 # --------- zah-autosuggestion ----------- 
 # brew install zsh-autosuggestion

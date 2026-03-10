@@ -17,8 +17,12 @@ background-blur = true
 
 # Keybindings
 keybind = super+u=scroll_page_up
-keybind = super+i=scroll_page_down
-keybind = super+k=scroll_page_lines:1
-keybind = super+j=scroll_page_lines:-1
-keybind = super+f=toggle_fullscreen
+keybind = super+d=scroll_page_down
+keybind = super+k=scroll_page_lines:3
+keybind = super+j=scroll_page_lines:-3
+keybind = super+\=new_split:down
+keybind = super+shift+\=new_split:right
+keybind = ctrl+t=next_tab
+keybind = ctrl+shift+t=previous_tab
+
 

@@ -4,7 +4,8 @@ Organize dot files with stow
 ## Install
 
 > brew install stow
-> cd dotfiles
+
+> cd dotfiles/
 
 ## Set
 
