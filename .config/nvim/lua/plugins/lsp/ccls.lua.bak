@@ -1,0 +1,17 @@
+return {
+  "neovim/nvim-lspconfig",
+  opts = {
+    servers = {
+      ccls = {
+        init_options = {
+          cache = {
+            directory = ".ccls-cache",
+          },
+        },
+        root_dir = function(fname)
+          return require("lspconfig.util").root_pattern("compile_commands.json", ".ccls", ".git")(fname)
+        end,
+      },
+    },
+  },
+}
