@@ -1,9 +1,5 @@
 set -o err_return
 
-# ---------- WezTerm ---------- 
-PATH="$PATH:/Applications/WezTerm.app/Contents/MacOS"
-export PATH
-
 # --------- Nerd Font -----------
 # brew install font-jetbrains-mono-nerd-font
 
@@ -73,47 +69,48 @@ export PATH=~/.local/bin/:$PATH
 # STM32 Programmer
 export STM32_PRG_PATH=/Applications/STMicroelectronics/STM32Cube/STM32CubeProgrammer/STM32CubeProgrammer.app/Contents/MacOs/bin%
 
-# ===== Smart Proxy Bootstrap with Daemon Detection =====
-PROXY_HOST="127.0.0.1"
-PROXY_PORT="26812"
-PROXY_HTTP="http://${PROXY_HOST}:${PROXY_PORT}"
-PROXY_SOCKS="socks5://${PROXY_HOST}:${PROXY_PORT}"
-TEST_URL="https://www.youtube.com"
-TIMEOUT=3
-
-proxy_daemon_running() {
-  pgrep -f "clash|mihomo|v2ray|xray" > /dev/null
-}
+# ===== Smart Proxy =====
+PROXY_HTTP="http://127.0.0.1:7890"
+PROXY_SOCKS="socks5h://127.0.0.1:7890"
+PROXY_TEST_URL="https://ipinfo.io/json"
 
 proxy_health_check() {
   curl --proxy "$PROXY_HTTP" \
-       --max-time $TIMEOUT \
+       --connect-timeout 2 \
+       --max-time 8 \
+       --fail \
        --silent \
        --output /dev/null \
-       "$TEST_URL"
+       "$PROXY_TEST_URL"
 }
 
-set_proxy() {
+proxy_on() {
   export http_proxy="$PROXY_HTTP"
   export https_proxy="$PROXY_HTTP"
   export all_proxy="$PROXY_SOCKS"
+  echo "✔ Proxy enabled"
 }
 
-unset_proxy() {
+proxy_off() {
   unset http_proxy https_proxy all_proxy
+  echo "✔ Proxy disabled"
 }
 
-if proxy_daemon_running; then
-  if [[ -z "$http_proxy" && -z "$https_proxy" ]]; then
-    set_proxy
-    if proxy_health_check; then
-      echo "✔ Proxy enabled (daemon running)"
-    else
-      unset_proxy
-      echo "✘ Proxy daemon detected but health check failed"
-    fi
+proxy_status() {
+  if proxy_health_check; then
+    echo "✔ Proxy reachable"
+    curl -s --proxy "$PROXY_HTTP" https://ipinfo.io/ip
+  else
+    echo "✘ Proxy unreachable"
   fi
+}
+
+# Auto-enable when proxy is available
+if proxy_health_check; then
+  proxy_on
 else
-  unset_proxy
-  echo "No Clash/V2Ray daemon running — proxy disabled"
+  proxy_off
 fi
+
+# Other environment setup
+. "$HOME/.local/bin/env"

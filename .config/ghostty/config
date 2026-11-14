@@ -24,5 +24,6 @@ keybind = super+\=new_split:down
 keybind = super+shift+\=new_split:right
 keybind = ctrl+t=next_tab
 keybind = ctrl+shift+t=previous_tab
+keybind = ctrl+a=text:\x01
 
 
